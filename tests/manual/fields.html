@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Hoppa · דף בדיקה ידנית · שדות</title>
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<h1>Hoppa · בדיקה ידנית · שדות רגילים ועורכים</h1>
+<p class="lead">בכל שדה: להקליד קיצור (למשל הלוכסן ואחריו בב) ולראות שהוא מתחלף. אחר כך Backspace מיד אחרי ההחלפה, ו-Ctrl+Z.</p>
+
+<section>
+  <h2>1. שדה של שורה אחת (input)</h2>
+  <input id="in1" type="text" autocomplete="off">
+  <h2>2. שדה חיפוש (input type=search)</h2>
+  <input id="in2" type="search" autocomplete="off">
+  <h2>3. שדה של כמה שורות (textarea), כמו בפורום מתמחים</h2>
+  <textarea id="ta1" rows="5"></textarea>
+</section>
+
+<section>
+  <h2>4. עורך עשיר ריק (contenteditable)</h2>
+  <div id="ce1" class="editor" contenteditable="true"></div>
+  <h2>5. עורך עשיר עם שורות קיימות, כמו חלון כתיבה במייל</h2>
+  <div id="ce2" class="editor" contenteditable="true"><div>שלום,</div><div><br></div></div>
+  <h2>6. עורך של טקסט בלבד (plaintext-only)</h2>
+  <div id="ce3" class="editor" contenteditable="plaintext-only"></div>
+  <h2>7. עורך עם טקסט מודגש לפני הסמן</h2>
+  <div id="ce4" class="editor" contenteditable="true"><b>מודגש</b></div>
+</section>
+
+<section>
+  <h2>8. שדות בתוך מסגרת פנימית (iframe)</h2>
+  <iframe id="fr1" src="frame.html" title="מסגרת פנימית"></iframe>
+  <h2>9. עורך בתוך מסגרת ריקה שהדף יצר (srcdoc)</h2>
+  <iframe id="fr2" title="מסגרת srcdoc" srcdoc="<!doctype html><meta charset='utf-8'><body dir='rtl'><div id='ce' contenteditable='true' style='min-height:60px;border:1px solid #888;padding:6px'></div></body>"></iframe>
+  <div id="fr3Box"><!-- מסגרת ריקה (about:blank) שהדף בונה בסקריפט, כמו עורכים מסוג TinyMCE או CKEditor 4 --></div>
+  <h2>10. שדה בתוך Shadow DOM</h2>
+  <div id="shadowHost"></div>
+</section>
+
+<section>
+  <h2>11. טופס: Enter שולח</h2>
+  <form id="form1"><input id="in3" type="text" autocomplete="off"> <button type="submit">שליחה</button></form>
+  <p>נשלח: <output id="sent"></output></p>
+</section>
+
+<script src="fields.js"></script>
+</body>
+</html>

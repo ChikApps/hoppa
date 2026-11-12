@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>דף בדיקה ידנית · אתר תוקף</title>
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<h1>בדיקה ידנית · אתר שמנסה לנצל את התוסף</h1>
+<p class="lead">הדף הזה מתנהג כמו אתר זדוני: הוא מנסה לגרום לתוסף להכניס את החתימה של המשתמש לשדה נסתר, מחפש סימנים לכך שהתוסף מותקן, ומנסה לשלוח לו הודעות. בכל השורות צריך להופיע "עבר".</p>
+
+<p>
+  <button type="button" id="run">הרצת כל הניסיונות</button>
+  כתובת עם <code>?ext=מזהה-התוסף</code> בודקת גם גישה לקבצים של התוסף.
+</p>
+
+<h2>שדה לניסיון "החלפת מקשים"</h2>
+<p>אחרי לחיצה על הכפתור, להקליד כאן שלוש אותיות כלשהן (למשל abc). הדף מחליף כל מקש בתו של הקיצור.</p>
+<input id="sub" type="text" autocomplete="off">
+<button type="button" id="checkSub">בדיקת התוצאה, וחיפוש סימנים לתוסף</button>
+
+<h2>שדה לניסיון "תחילת מילה מזויפת"</h2>
+<p>להקליד כאן את האות א ומיד אחריה את הקיצור של התאריך העברי. אחרי האות, הדף שולח אירוע עכבר מזויף ומחליף את האות ברווח. אסור שתהיה החלפה.</p>
+<input id="wordStart" type="text" autocomplete="off">
+<p>אותו ניסיון, כשהדף מחליף את האות ברווח בפקודת עריכה של הדפדפן (בלי אירועים מזויפים):</p>
+<input id="wordStart2" type="text" autocomplete="off">
+<p>ובלי להכניס כלום: הדף בולע את האות ב ומוחק את האות שלפניה בפקודת עריכה, כך שנשאר רק הרווח שהדף שם מראש:</p>
+<input id="wordStart3" type="text" autocomplete="off" value="x ">
+
+<input id="h1" class="hidden-field" type="text" tabindex="-1" aria-hidden="true">
+<input id="h2" class="hidden-field" type="text" tabindex="-1" aria-hidden="true">
+<input id="h3" class="hidden-field" type="text" tabindex="-1" aria-hidden="true">
+<div id="h4" class="hidden-field" contenteditable="true" tabindex="-1" aria-hidden="true"></div>
+
+<h2>תוצאות</h2>
+<table><thead><tr><th>ניסיון</th><th>תוצאה</th><th>פירוט</th></tr></thead><tbody id="rows"></tbody></table>
+<pre id="results" hidden></pre>
+
+<script src="attacker.js"></script>
+</body>
+</html>

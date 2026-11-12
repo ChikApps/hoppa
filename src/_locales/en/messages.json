@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Hoppa – Hebrew text expander",
+    "description": "The name of the extension, as shown in the Chrome Web Store."
+  },
+  "extDescription": {
+    "message": "Hebrew text expander: ready-made Hebrew snippets, Hebrew date, weekly Torah portion and numbers to words. Free, offline, no account.",
+    "description": "The short description. Up to 132 characters."
+  }
+}

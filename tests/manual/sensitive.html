@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Hoppa · דף בדיקה ידנית · שדות רגישים</title>
+<link rel="stylesheet" href="manual.css">
+</head>
+<body>
+<h1>Hoppa · בדיקה ידנית · שדות רגישים</h1>
+<p class="lead">באף אחד מהשדות האלה אסור שקיצור יוחלף. להקליד בכל שדה את הלוכסן ואחריו בב, ולוודא שהטקסט נשאר כמו שהוקלד.</p>
+<table>
+<tr><th>שדה</th><th>מה בודקים</th></tr>
+<tr><td><input id="s-password" type="password"></td><td>סיסמה</td></tr>
+<tr><td><input id="s-show" type="password"> <button type="button" id="s-show-btn">הצג סיסמה</button></td><td>סיסמה אחרי "הצג סיסמה" (הופכת לשדה טקסט)</td></tr>
+<tr><td><input id="s-show2" type="password"> <span id="s-show2-btn" role="button">👁 הצג</span></td><td>סיסמה שהוצגה לפני שהשדה קיבל מיקוד (כפתור שאינו button)</td></tr>
+<tr><td><input id="s-cc" type="text" autocomplete="cc-number"></td><td>מספר כרטיס אשראי (autocomplete=cc-number)</td></tr>
+<tr><td><input id="s-ccname" type="text" autocomplete="section-pay cc-name"></td><td>שם בעל הכרטיס (autocomplete עם cc-name)</td></tr>
+<tr><td><input id="s-otp" type="text" autocomplete="one-time-code"></td><td>קוד חד-פעמי (autocomplete=one-time-code)</td></tr>
+<tr><td><input id="s-newpass" type="text" autocomplete="new-password"></td><td>autocomplete=new-password</td></tr>
+<tr><td><input id="s-name-otp" type="text" name="otp_code"></td><td>name מכיל otp</td></tr>
+<tr><td><input id="s-name-pin" type="text" name="user-pin"></td><td>name מכיל את המילה pin</td></tr>
+<tr><td><input id="cardnumber" type="text"></td><td>id=cardnumber</td></tr>
+<tr><td><input id="s-cvv" type="text" name="cvv"></td><td>name=cvv</td></tr>
+<tr><td><input id="s-ph" type="text" placeholder="סיסמה"></td><td>placeholder בעברית: סיסמה</td></tr>
+<tr><td><input id="s-aria" type="text" aria-label="קוד אימות"></td><td>aria-label: קוד אימות</td></tr>
+<tr><td><input id="s-credit" type="text" placeholder="מספר כרטיס אשראי"></td><td>placeholder: אשראי</td></tr>
+<tr><td><input id="s-numeric" type="text" inputmode="numeric" maxlength="6"></td><td>קוד קצר: inputmode=numeric, maxlength=6</td></tr>
+<tr><td><input id="s-masked" type="text" class="masked"></td><td>טקסט מוסתר בנקודות (text-security)</td></tr>
+<tr><td><input id="s-readonly" type="text" readonly value=""></td><td>readonly</td></tr>
+<tr><td><input id="s-email" type="email"></td><td>type=email</td></tr>
+<tr><td><input id="s-tel" type="tel"></td><td>type=tel</td></tr>
+<tr><td><input id="s-url" type="url"></td><td>type=url</td></tr>
+<tr><td><input id="s-number" type="number"></td><td>type=number</td></tr>
+<tr><td><span id="s-swap-wrap"><input id="s-swap" type="password" class="form-control"></span> <button type="button" id="s-swap-btn">הצג</button></td><td>סיסמה שהאתר מציג על ידי החלפת השדה בשדה חדש, בלי שום רמז בשם</td></tr>
+<tr><td><span id="s-twin-wrap"><input id="s-twin-pw" type="password"><input id="s-twin-text" type="text" class="masked-off" hidden></span> <button type="button" id="s-twin-btn">הצג</button></td><td>סיסמה עם שדה טקסט מוסתר מראש, שמוצג ב"הצג" (שדה הסיסמה לא מוסר)</td></tr>
+<tr><td><input id="s-card-number" type="text" name="card_number"></td><td>name=card_number</td></tr>
+<tr><td><input id="s-creditcard" type="text" name="creditCard"></td><td>name=creditCard</td></tr>
+<tr><td><input id="s-ccnum" type="text" name="ccnum"></td><td>name=ccnum</td></tr>
+<tr><td><input id="s-card-en" type="text" placeholder="Card number"></td><td>placeholder="Card number"</td></tr>
+<tr><td><input id="s-card-he" type="text" placeholder="מספר כרטיס"></td><td>placeholder: מספר כרטיס</td></tr>
+<tr><td><input id="s-back" type="text" placeholder="3 ספרות בגב הכרטיס"></td><td>placeholder: 3 ספרות בגב הכרטיס</td></tr>
+<tr><td><input id="s-seccode" type="text" name="security_code"></td><td>name=security_code</td></tr>
+<tr><td><input id="s-expiry" type="text" name="expiry"></td><td>name=expiry</td></tr>
+<tr><td><input id="s-vercode" type="text" name="verification_code"></td><td>name=verification_code</td></tr>
+<tr><td><input id="s-onetime-he" type="text" placeholder="קוד חד פעמי"></td><td>placeholder: קוד חד פעמי</td></tr>
+<tr><td><input id="s-code" type="text" name="code" placeholder="הקוד שקיבלת ב-SMS"></td><td>name=code</td></tr>
+<tr><td><input id="s-digit" type="text" maxlength="1"></td><td>תיבה של ספרה אחת (maxlength=1)</td></tr>
+<tr><td><input id="s-iban" type="text" name="iban"></td><td>name=iban</td></tr>
+<tr><td><input id="s-acct" type="text" name="accountNumber"></td><td>name=accountNumber</td></tr>
+<tr><td><input id="s-ssn" type="text" name="ssn"></td><td>name=ssn</td></tr>
+<tr><td><input id="s-tz" type="text" placeholder='ת"ז'></td><td>placeholder: ת"ז</td></tr>
+<tr><td><input id="s-bank-he" type="text" placeholder="מספר חשבון"></td><td>placeholder: מספר חשבון</td></tr>
+<tr><td><input id="s-ccnumber" type="text" name="ccnumber"></td><td>name=ccnumber</td></tr>
+<tr><td><div id="s-ce-pass" class="editor masked" contenteditable="true" aria-label="password"></div></td><td>עורך עשיר עם aria-label=password</td></tr>
+</table>
+<h2>שדה רגיל להשוואה (כאן הקיצור כן מוחלף)</h2>
+<input id="s-normal" type="text" autocomplete="off">
+<script src="sensitive.js"></script>
+</body>
+</html>

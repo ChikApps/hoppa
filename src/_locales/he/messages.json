@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "Hoppa – קיצורים חכמים בעברית",
+    "description": "The name of the extension, as shown in the Chrome Web Store."
+  },
+  "extDescription": {
+    "message": "מקלידים {{T}}בב ומקבלים \"בברכה,\". טקסטים מוכנים, תאריך עברי ופרשת השבוע בכל אתר. חינם, בלי הרשמה ובלי איסוף מידע.",
+    "description": "The short description. Up to 132 characters."
+  }
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<!-- Copyright (C) 2026 ChikApps. SPDX-License-Identifier: GPL-2.0-or-later -->
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ברוכים הבאים ל-Hoppa</title>
+<link rel="stylesheet" href="css/hoppa.css">
+<script src="js/theme.js"></script>
+</head>
+<body class="page-welcome">
+<div class="wl">
+  <header class="wl-top"><img src="icons/hoppa.svg" alt="" width="34" height="34">Hoppa</header>
+
+  <main class="wl-grid">
+    <section aria-labelledby="wlH">
+      <h1 id="wlH">ברוכים הבאים <span class="nw">ל-<span class="hl">Hoppa</span></span></h1>
+      <ul class="wl-lines">
+        <li>
+          <span class="wl-ico" aria-hidden="true"><svg width="22" height="12" viewBox="0 0 22 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 6c-1.4-4.5-2.6-4.5-4 0s-2.6 4.5-4 0-2.6-4.5-4 0-2.6 4.5-4 0L1 6"/></svg></span>
+          <p>מקלידים קיצור, והוא מתחלף לטקסט המלא. בכל אתר.</p>
+        </li>
+        <li>
+          <span class="wl-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M10 16l4-8"/></svg></span>
+          <div>
+            <p>כל הקיצורים מתחילים ב-{{T}}. במקלדת עברית הלוכסן ({{T}}) נמצא על המקש שמימין ל-Tab, ולא צריך להחליף שפה.</p>
+            <div class="kb" aria-hidden="true">
+              <span class="key tab"><span class="en">&nbsp;</span><span class="he">Tab ⇥</span></span>
+              <span class="key hot" id="slashKey"><span class="en">q</span><span class="he">{{T}}</span></span>
+              <span class="key fade"><span class="en">w</span><span class="he">'</span></span>
+              <span class="key fade"><span class="en">e</span><span class="he">ק</span></span>
+              <span class="key fade"><span class="en">r</span><span class="he">ר</span></span>
+              <span class="key fade"><span class="en">t</span><span class="he">א</span></span>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="wl-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
+          <p>אנחנו לא אוספים שום מידע, ואין לנו שרת. הקיצורים נשמרים בכרום שלכם, ומסתנכרנים דרך חשבון הגוגל שלכם רק אם הסנכרון של כרום פועל.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="try" id="tryCard" aria-labelledby="tryLabel">
+      <label class="try-label" id="tryLabel" for="try">נסו עכשיו: הקלידו כאן <bdi class="chip smart">{{T}}תע</bdi></label>
+      <input class="try-input" id="try" placeholder="{{T}}תע" autocomplete="off" spellcheck="false" aria-describedby="tryMsg tryHint" autofocus>
+      <div class="try-spring" aria-hidden="true">
+        <span class="chip smart" id="tryChip">{{T}}תע</span>
+        <svg viewBox="0 0 300 18" preserveAspectRatio="none"><path d="M300 9 C297 1 293 1 290 9 S283 17 280 9 S273 1 270 9 S263 17 260 9 S253 1 250 9 S243 17 240 9 S233 1 230 9 S223 17 220 9 S213 1 210 9 S203 17 200 9 S193 1 190 9 S183 17 180 9 S173 1 170 9 S163 17 160 9 S153 1 150 9 S143 17 140 9 S133 1 130 9 S123 17 120 9 S113 1 110 9 S103 17 100 9 S93 1 90 9 S83 17 80 9 S73 1 70 9 S63 17 60 9 S53 1 50 9 S43 17 40 9 S33 1 30 9 S23 17 20 9 S13 1 10 9 L0 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+        <span class="try-gain" id="tryGain"></span>
+      </div>
+      <p class="try-msg" id="tryMsg" aria-live="polite"></p>
+      <p class="try-hint" id="tryHint" aria-live="polite" hidden>לא התחלף? צריך {{T}} ואחריו תע, בלי רווח באמצע.</p>
+      <p class="try-more">אפשר לנסות גם: <bdi class="chip">{{T}}בב</bdi> · <bdi class="chip smart">{{T}}שעה</bdi> · <bdi class="chip smart">{{T}}פרשה</bdi> · <bdi class="chip smart">{{T}}1500</bdi> ורווח</p>
+    </section>
+  </main>
+
+  <footer class="wl-actions">
+    <button type="button" class="btn primary lg" id="gotIt">מעולה, הבנתי!</button>
+    <a class="link" href="options.html">לכל הקיצורים המוכנים ←</a>
+  </footer>
+</div>
+
+<script src="js/welcome.js"></script>
+</body>
+</html>

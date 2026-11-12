@@ -1,0 +1,527 @@
+/* =====================================================================
+   Hoppa · קובץ העיצוב המשותף · כיוון "קפיץ" · 2026-11-11
+   ---------------------------------------------------------------------
+   שתי ערכות, כל הצבעים כמשתנים:
+     html[data-theme="dark"]  = לילה (ברירת מחדל)
+     html[data-theme="light"] = יום
+   אין שום משאב מבחוץ: גופני מערכת בלבד, אייקונים כ-SVG בתוך החבילה.
+   סדר הקובץ: 1 משתנים · 2 בסיס · 3 רכיבים · 4 חלון קופץ · 5 דף ניהול
+             6 דף פתיחה · 7 לוח מסכים (רק לעיצוב, לא נכנס לתוסף)
+   ===================================================================== */
+
+/* ---------- 1. משתנים ---------- */
+:root,
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --bg:#0B1320;            /* רקע הדף */
+  --panel:#111C2E;         /* משטח ראשי */
+  --sunken:#0E1828;        /* צד, עורך, שורת אתר */
+  --hover:#17253B;         /* ריחוף ובחירה */
+  --line:#22344F;          /* קווים */
+  --line-soft:#1A2940;     /* קווי טבלה */
+  --input-bg:#0B1320;
+
+  --text:#E6EDF7;
+  --text-2:#93A5C0;
+  --text-3:#8296B5;        /* טקסט עזר. עומד ב-4.5:1 גם על --hover */
+
+  --accent:#3EE6A8;        /* מנטה: הקיצורים שלי, כפתור ראשי, מתג דולק */
+  --accent-border:#3EE6A8;
+  --on-accent:#0B1320;
+  --accent-ink:#3EE6A8;    /* מנטה כטקסט */
+  --accent-soft:rgba(62,230,168,.10);
+  --accent-line:rgba(62,230,168,.32);
+
+  --smart-ink:#FFB547;     /* ענבר: הקיצורים החכמים, אזהרות */
+  --smart-soft:rgba(255,181,71,.10);
+  --smart-line:rgba(255,181,71,.35);
+  --warn-fill:#FFB547;     /* מתג "כבוי באתר הזה" דולק */
+  --on-warn:#0B1320;
+
+  --danger:#FF8080;
+  --danger-fill:#FF6B6B;
+  --on-danger:#0B1320;
+
+  --switch-off:#2C3E5A;
+  --switch-off-line:rgba(143,161,188,.45);
+  --knob-off:#A3B4CC;
+  --knob-on:#0B1320;
+
+  --coil:#3EE6A8;
+  --glyph:#4C6385;         /* קישוט בלבד (קפיץ קטן, חצים) */
+  --toast-bg:#3EE6A8;
+  --toast-text:#0B1320;
+  --glow:0 0 8px rgba(62,230,168,.9);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+  --shadow-sm:0 8px 22px rgba(0,0,0,.4);
+  --backdrop:rgba(4,8,15,.66);
+  --focus:#3EE6A8;
+  --key-face:#17253B;
+  --key-edge:#060B13;
+
+  --font-sans:system-ui,"Segoe UI",Arial,"Liberation Sans",sans-serif;
+  --font-mono:Consolas,"Courier New","Liberation Mono",monospace;
+  --r-sm:4px; --r:6px; --r-lg:10px;
+  --ease-spring:cubic-bezier(.3,1.6,.5,1);
+}
+
+:root[data-theme="light"]{
+  color-scheme: light;
+  --bg:#EDF1F6;
+  --panel:#FFFFFF;
+  --sunken:#F4F7FB;
+  --hover:#EAF0F7;
+  --line:#D3DCE8;
+  --line-soft:#E4EAF2;
+  --input-bg:#F9FBFD;
+
+  --text:#0B1320;
+  --text-2:#42536C;
+  --text-3:#56677F;
+
+  --accent:#2EDC9E;
+  --accent-border:#17B985;
+  --on-accent:#0B1320;
+  --accent-ink:#036A49;
+  --accent-soft:#E3F8EF;
+  --accent-line:#9EDFC5;
+
+  --smart-ink:#934F00;
+  --smart-soft:#FFF1DC;
+  --smart-line:#F0C98B;
+  --warn-fill:#B86400;
+  --on-warn:#FFFFFF;
+
+  --danger:#BF2236;
+  --danger-fill:#C8283D;
+  --on-danger:#FFFFFF;
+
+  --switch-off:#7D8DA5;
+  --switch-off-line:transparent;
+  --knob-off:#FFFFFF;
+  --knob-on:#0B1320;
+
+  --coil:#13A876;
+  --glyph:#A3B1C4;
+  --toast-bg:#0B1320;
+  --toast-text:#E6EDF7;
+  --glow:none;
+  --shadow:0 18px 48px rgba(11,19,32,.13);
+  --shadow-sm:0 8px 22px rgba(11,19,32,.12);
+  --backdrop:rgba(11,19,32,.38);
+  --focus:#036A49;
+  --key-face:#FFFFFF;
+  --key-edge:#C3CEDC;
+}
+
+/* ---------- 2. בסיס ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul,ol,figure,fieldset,legend{margin:0;padding:0}
+ul{list-style:none}
+fieldset{border:0;min-width:0}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:inherit}
+[hidden]{display:none!important}
+bdi{unicode-bidi:isolate}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:var(--r-sm)}
+::placeholder{color:var(--text-3);opacity:1}
+input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+
+/* מעבר רך בין לילה ליום (מופעל רק לרגע ההחלפה) */
+html.theme-anim,html.theme-anim *,html.theme-anim *::before,html.theme-anim *::after{
+  transition:background-color .3s ease,border-color .3s ease,color .3s ease,box-shadow .3s ease,fill .3s ease,stroke .3s ease!important}
+
+/* ---------- 3. רכיבים ---------- */
+
+/* קיצור כ"שבב": מנטה = שלי, ענבר = חכם */
+.chip{display:inline-block;font-family:var(--font-mono);font-weight:700;font-size:13.5px;line-height:1.4;color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-line);padding:0 6px;border-radius:var(--r-sm);white-space:nowrap;direction:rtl;unicode-bidi:isolate;flex:none}
+.chip.smart{color:var(--smart-ink);background:var(--smart-soft);border-color:var(--smart-line)}
+.chip.lg{font-size:15px;padding:2px 8px}
+
+/* כמה תווים הקיצור חוסך: אורך הטקסט פחות אורך הקיצור (מחושב, לא ממוספר ידנית) */
+.gain{font-family:var(--font-mono);font-size:11.5px;color:var(--text-3);direction:ltr;unicode-bidi:isolate;flex:none}
+
+/* קפיץ קטן בין הקיצור לטקסט (קישוט). SVG שכתוב בדף (ב-HTML או נוצר ב-JS), בלי תמונה מוטמעת */
+.coil-mini{display:inline-block;width:16px;height:8px;flex:none;color:var(--glyph);overflow:visible;vertical-align:middle}
+.coil-mini.lg{width:26px;height:12px}
+.coil-mini.accent{color:var(--coil)}
+
+/* חוצץ נסתר להעתקה (גיבוי ל-clipboard API). מחלקה במקום style מה-JS */
+.copy-buffer{position:fixed;top:0;left:0;width:1px;height:1px;padding:0;border:0;opacity:0;pointer-events:none}
+
+/* מתג (checkbox עם role="switch"). דולק = הידית קופצת שמאלה, עם קפיצה קטנה */
+.sw{appearance:none;-webkit-appearance:none;margin:0;width:34px;height:20px;border-radius:10px;background:var(--switch-off);box-shadow:inset 0 0 0 1px var(--switch-off-line);position:relative;cursor:pointer;flex:none;transition:background-color .15s}
+.sw::after{content:"";position:absolute;top:3px;inset-inline-start:3px;width:14px;height:14px;border-radius:50%;background:var(--knob-off);transition:inset-inline-start .22s var(--ease-spring)}
+.sw:checked{background:var(--accent);box-shadow:inset 0 0 0 1px var(--accent-border)}
+.sw:checked::after{inset-inline-start:17px;background:var(--knob-on)}
+.sw.warn:checked{background:var(--warn-fill);box-shadow:none}
+.sw.warn:checked::after{background:var(--on-warn)}
+.sw:disabled{opacity:.45;cursor:not-allowed}
+.sw:focus-visible{border-radius:10px}
+
+/* כפתורים */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:36px;padding:0 14px;border-radius:var(--r);border:1px solid var(--line);background:var(--hover);color:var(--text);font-size:13.5px;white-space:nowrap;text-decoration:none}
+.btn:hover{border-color:var(--text-3)}
+.btn.primary{background:var(--accent);border-color:var(--accent-border);color:var(--on-accent);font-weight:700}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.danger{background:var(--danger-fill);border-color:var(--danger-fill);color:var(--on-danger);font-weight:700}
+.btn.lg{height:46px;padding:0 22px;font-size:16px;border-radius:8px}
+.btn-text{background:none;border:0;padding:5px 6px;font-size:13px;color:var(--text-2);border-radius:var(--r-sm)}
+.btn-text:hover{color:var(--text);background:var(--hover)}
+.btn-text.danger{color:var(--danger)}
+.link{color:var(--accent-ink);font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.link:hover{text-decoration-thickness:2px}
+.todo{display:inline-block;font-family:var(--font-mono);font-size:12px;color:var(--smart-ink);border:1px dashed var(--smart-line);background:var(--smart-soft);padding:0 6px;border-radius:var(--r-sm)}
+
+/* כפתור מצב יום: שמש כבויה בלילה, שמש דולקת ביום (aria-pressed) */
+.theme-btn{width:30px;height:30px;display:grid;place-items:center;border-radius:var(--r);border:1px solid transparent;background:transparent;color:var(--text-2);flex:none;padding:0}
+.theme-btn:hover{background:var(--hover);color:var(--text)}
+.sun{display:block}
+.sun .core{fill:none;transition:fill .2s}
+.sun .rays{transform-origin:12px 12px;transition:transform .45s var(--ease-spring)}
+[aria-pressed="true"] .sun{color:var(--smart-ink)}
+[aria-pressed="true"] .sun .core{fill:currentColor}
+[aria-pressed="true"] .sun .rays{transform:rotate(45deg)}
+
+.theme-row{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border-radius:var(--r);border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:13.5px;text-align:start}
+.theme-row:hover{border-color:var(--text-3)}
+.theme-row .mini-sw{margin-inline-start:auto;width:28px;height:16px;border-radius:8px;background:var(--switch-off);position:relative;flex:none}
+.theme-row .mini-sw::after{content:"";position:absolute;top:2px;inset-inline-start:2px;width:12px;height:12px;border-radius:50%;background:var(--knob-off);transition:inset-inline-start .22s var(--ease-spring)}
+.theme-row[aria-pressed="true"] .mini-sw{background:var(--accent)}
+.theme-row[aria-pressed="true"] .mini-sw::after{inset-inline-start:14px;background:var(--knob-on)}
+
+/* הודעה קופצת */
+.toast{position:absolute;inset-inline:12px;bottom:54px;z-index:20;padding:8px 12px;border-radius:var(--r);background:var(--toast-bg);color:var(--toast-text);font-weight:700;font-size:13px;opacity:0;transform:translateY(10px);transition:opacity .18s,transform .3s var(--ease-spring);pointer-events:none;box-shadow:var(--shadow-sm)}
+.toast.on{opacity:1;transform:none}
+.toast.err{background:var(--danger-fill);color:var(--on-danger)}
+
+/* קפיצה: הקיצור "קופץ" כשהטקסט שלו שוחרר */
+@keyframes hop{0%{transform:translateY(0)}30%{transform:translateY(-6px)}55%{transform:translateY(1.5px)}75%{transform:translateY(-1.5px)}100%{transform:translateY(0)}}
+
+/* ---------- 4. חלון קופץ (popup.html) ---------- */
+.page-popup{width:360px;height:500px;overflow:hidden;background:var(--panel)}
+html.is-preview .page-popup{width:auto;height:auto;min-height:100vh;display:grid;place-items:center;overflow:auto;padding:24px 0;background:var(--bg)}
+.popup{width:360px;height:500px;background:var(--panel);display:flex;flex-direction:column;position:relative;overflow:hidden}
+html.is-preview .popup{border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+
+.p-head{display:flex;align-items:center;gap:8px;padding:0 12px;height:50px;flex:none;border-bottom:1px solid var(--line)}
+.p-head .logo{width:26px;height:26px;flex:none;display:block}
+.p-name{font-size:16px;font-weight:700;flex:1;letter-spacing:.2px}
+.power{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--accent-ink);cursor:pointer}
+.power-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:var(--glow)}
+.is-off .power{color:var(--text-2)}
+.is-off .power-dot{background:var(--text-3);box-shadow:none}
+
+.p-site{display:flex;align-items:center;gap:8px;padding:0 12px;height:36px;flex:none;border-bottom:1px solid var(--line);background:var(--sunken);font-size:12.5px;color:var(--text-2)}
+.p-site.is-checked{background:var(--smart-soft)}
+.site-label{flex:1;min-width:0;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.domain{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text)}
+
+.p-banner{display:flex;gap:9px;padding:8px 12px;flex:none;font-size:12.5px;line-height:1.5;border-bottom:1px solid var(--line);background:var(--smart-soft);color:var(--text)}
+.p-banner::before{content:"";flex:none;width:3px;border-radius:2px;background:var(--smart-ink)}
+.p-banner.info{background:var(--sunken)}
+.p-banner.info::before{background:var(--text-3)}
+.p-banner a{color:var(--accent-ink);font-weight:600}
+
+.p-search{display:flex;align-items:center;gap:8px;padding:0 12px;height:42px;flex:none;border-bottom:1px solid var(--line);color:var(--text-2)}
+.p-search:focus-within{box-shadow:inset 0 -2px 0 var(--focus)}
+.p-search input{flex:1;min-width:0;height:100%;background:transparent;border:0;font-size:14px;color:var(--text)}
+.p-search input:focus-visible{outline:none}
+.p-help{font-size:11.5px;color:var(--text-3);padding:7px 12px 0;flex:none}
+
+.p-list{flex:1;overflow-y:auto;padding-bottom:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.grp-h{display:flex;justify-content:space-between;align-items:baseline;font-size:11.5px;font-weight:600;color:var(--text-3);padding:9px 12px 3px}
+.row{display:flex;align-items:center;gap:8px;width:100%;min-height:32px;padding:5px 12px;background:transparent;border:0;color:var(--text);text-align:right;cursor:pointer}
+.row:hover{background:var(--hover)}
+.row:focus-visible{outline-offset:-2px;border-radius:0;background:var(--hover)}
+.row-text{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:13.5px;unicode-bidi:plaintext;text-align:right}
+.row.smart .row-text{color:var(--smart-ink)}
+.row .nl{color:var(--text-3);font-size:11px;margin:0 4px}
+.row.copied{background:var(--accent-soft)}
+.row.copied .chip{animation:hop .45s cubic-bezier(.3,.7,.4,1)}
+.p-empty{display:flex;align-items:center;gap:12px;margin:6px 12px;padding:12px;border:1px dashed var(--line);border-radius:var(--r);font-size:12.5px;line-height:1.5;color:var(--text-2)}
+.p-empty svg{flex:none;color:var(--glyph)}
+.p-none{padding:28px 12px;text-align:center;color:var(--text-2);font-size:13px}
+
+.p-foot{display:flex;align-items:center;justify-content:space-between;padding:0 6px 0 12px;height:44px;flex:none;border-top:1px solid var(--line)}
+.p-manage{display:inline-flex;align-items:center;gap:7px;color:var(--accent-ink);font-weight:700;text-decoration:none;font-size:13px;padding:6px 8px;border-radius:var(--r)}
+.p-manage:hover{background:var(--accent-soft)}
+.p-keys{display:flex;gap:4px;direction:ltr}
+.p-keys kbd{font-family:var(--font-mono);font-size:10.5px;color:var(--text-3);border:1px solid var(--line);border-bottom-width:2px;border-radius:var(--r-sm);padding:0 5px;line-height:16px}
+
+/* ---------- 5. דף ניהול (options.html) ---------- */
+.page-options{min-height:100vh}
+/* רקע העמודות מצויר על הגריד, כדי שהצד והעורך (sticky) ימשיכו עד סוף הדף */
+.opt{display:grid;grid-template-columns:228px minmax(0,1fr);min-height:100vh;max-width:1480px;margin:0 auto;border-inline:1px solid var(--line);
+  background:linear-gradient(to left,var(--sunken) 0 227px,var(--line) 227px 228px,var(--panel) 228px)}
+
+.side{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:3px;padding:18px 12px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px 18px}
+.brand img{width:36px;height:36px;flex:none;display:block}
+.brand h1{font-size:19px;font-weight:800;line-height:1.15}
+.brand .sep{display:none}
+.brand-sub{display:block;font-size:12.5px;font-weight:400;color:var(--text-2);margin-top:2px}
+.tabs{display:flex;flex-direction:column;gap:3px}
+.tab{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 10px;border-radius:var(--r);border:0;background:transparent;color:var(--text-2);font-size:14px;text-align:start}
+.tab:hover{background:var(--hover);color:var(--text)}
+.tab[aria-selected="true"]{background:var(--hover);color:var(--text);font-weight:600;box-shadow:inset -3px 0 0 var(--accent)}
+.count{font-family:var(--font-mono);font-size:12px;font-weight:400;color:var(--text-3)}
+.side-bottom{margin-top:auto;display:flex;flex-direction:column;gap:12px;padding:0 2px}
+.sync{display:flex;gap:8px;font-size:12px;line-height:1.5;color:var(--text-2)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;margin-top:5px}
+.warn .dot{background:var(--smart-ink)}
+
+.content{min-width:0}
+.panel-mine{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:100vh;background:linear-gradient(to right,var(--sunken) 0 359px,var(--line) 359px 360px,transparent 360px)}
+.list-col{padding:20px 22px;min-width:0;display:flex;flex-direction:column}
+.tools{display:flex;gap:8px;margin-bottom:12px}
+.search-field{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:0 10px;height:38px;background:var(--input-bg);border:1px solid var(--line);border-radius:var(--r);color:var(--text-2)}
+.search-field:focus-within{border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+.search-field input{flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:14px;color:var(--text)}
+.search-field input:focus-visible{outline:none}
+.tools .btn{height:38px}
+
+.tbl{width:100%;border-collapse:collapse;table-layout:fixed}
+.tbl col.c-abbr{width:96px}.tbl col.c-desc{width:150px}.tbl col.c-gain{width:62px}.tbl col.c-on{width:58px}.tbl col.c-act{width:128px}
+.tbl th{font-size:12px;font-weight:600;color:var(--text-3);text-align:start;padding:7px 8px;border-bottom:1px solid var(--line)}
+.tbl td{padding:5px 8px;height:36px;border-bottom:1px solid var(--line-soft);font-size:13.5px;vertical-align:middle}
+.tbl td .btn-text{padding:2px 6px;line-height:1.35}
+.tbl td .sw{display:block}
+.tbl tbody tr{cursor:pointer}
+.tbl tbody tr:hover td{background:var(--hover)}
+.tbl tr.is-sel td{background:var(--accent-soft)}
+.tbl tr.is-sel td:first-child{box-shadow:inset -3px 0 0 var(--accent)}
+.tbl tr.is-off td.c-abbr,.tbl tr.is-off td.c-text,.tbl tr.is-off td.c-desc,.tbl tr.is-off td.c-gain{opacity:.5}
+.tbl tr.hop .chip{animation:hop .45s cubic-bezier(.3,.7,.4,1)}
+.td-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;unicode-bidi:plaintext;text-align:right}
+.td-text .nl{color:var(--text-3);font-size:11px;margin:0 4px}
+.td-desc{color:var(--text-2);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dash{color:var(--text-3)}
+.row-acts{display:flex;gap:2px;justify-content:flex-end;opacity:0;transition:opacity .12s}
+.tbl tr:hover .row-acts,.tbl tr:focus-within .row-acts,.tbl tr.is-sel .row-acts{opacity:1}
+.empty-search{padding:34px 8px;text-align:center;color:var(--text-2)}
+.empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:60px 24px;margin-top:4px;border:1px dashed var(--line);border-radius:var(--r-lg);color:var(--text-2);font-size:14.5px;line-height:1.6}
+.empty svg{color:var(--coil)}
+.empty .acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+
+.list-foot{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.list-foot .push{margin-inline-start:auto}
+.menu-wrap{position:relative}
+.menu{position:absolute;bottom:calc(100% + 6px);inset-inline-start:0;z-index:10;min-width:230px;padding:4px;background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow-sm)}
+.menu button{display:block;width:100%;text-align:start;padding:8px 10px;border:0;background:transparent;border-radius:var(--r-sm);font-size:13.5px;color:var(--text)}
+.menu button:hover,.menu button:focus-visible{background:var(--hover);outline-offset:-2px}
+
+.editor{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;padding:20px 18px}
+.ed-h{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.f{margin-bottom:14px}
+.f>label{display:block;font-size:12.5px;font-weight:600;color:var(--text-2);margin-bottom:5px}
+.f input,.f textarea{display:block;width:100%;padding:8px 10px;background:var(--input-bg);border:1px solid var(--line);border-radius:var(--r);font-size:14px;color:var(--text)}
+.f input:focus-visible,.f textarea:focus-visible{outline:none;border-color:var(--focus);box-shadow:0 0 0 1px var(--focus)}
+.f textarea{resize:vertical;min-height:100px;line-height:1.55}
+.f input.abbr-input{font-family:var(--font-mono);font-weight:700;font-size:17px;color:var(--accent-ink)}
+.help{font-size:12px;color:var(--text-3);margin-top:5px}
+.err{display:flex;gap:6px;align-items:flex-start;font-size:12.5px;font-weight:600;color:var(--danger);margin-top:5px}
+.err svg{flex:none;margin-top:2px}
+.f.has-err input,.f.has-err textarea{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger)}
+
+/* תצוגת הקפיץ בעורך: הקיצור ← קפיץ שנמתח לפי אורך הטקסט ← הטקסט המשוחרר */
+.spring{display:flex;align-items:center;gap:8px;margin:2px 0 16px;padding:12px;background:var(--input-bg);border:1px dashed var(--line);border-radius:8px}
+.spring .coil{flex:none;color:var(--coil);overflow:visible}
+.spring .coil path{transition:d .35s var(--ease-spring)}
+.spring-out{flex:1;min-width:0;max-height:7.6em;overflow:hidden;font-size:13px;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere;border-inline-start:2px solid var(--accent);padding-inline-start:9px;unicode-bidi:plaintext;text-align:right}
+.spring-gain{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--accent-ink);direction:ltr;flex:none}
+.f-inline{display:flex;align-items:center;gap:9px;font-size:13.5px;margin-bottom:18px;cursor:pointer}
+.acts-row{display:flex;gap:8px;align-items:center}
+.acts-row .push{margin-inline-start:auto}
+
+.panel-wide{padding:24px 30px 40px;max-width:900px}
+.lead{font-size:14.5px;color:var(--text-2);margin-bottom:14px}
+.smart-list{border-top:1px solid var(--line)}
+.smart-item{display:grid;grid-template-columns:104px 26px minmax(0,1fr) auto;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--line-soft)}
+.smart-item .chip{justify-self:start}
+.si-desc{font-size:14px;font-weight:600}
+.si-now{font-size:13px;color:var(--text-2);margin-top:3px}
+.si-val{color:var(--smart-ink);font-weight:700;font-size:15px}
+.si-note{font-size:12px;color:var(--text-3);margin-top:4px}
+.smart-item.is-off .chip,.smart-item.is-off .si-body,.smart-item.is-off .coil-mini{opacity:.5}
+
+.set{padding:18px 0;border-bottom:1px solid var(--line-soft)}
+.set:first-child{padding-top:4px}
+.set.last{border-bottom:0}
+.set-h{display:block;font-size:14.5px;font-weight:700;margin-bottom:10px}
+.set-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.seg{display:inline-flex;gap:3px;padding:3px;background:var(--input-bg);border:1px solid var(--line);border-radius:var(--r)}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.seg span{display:block;padding:6px 14px;border-radius:var(--r-sm);font-size:13.5px;color:var(--text-2);cursor:pointer;white-space:nowrap}
+.seg span:hover{color:var(--text);background:var(--hover)}
+.seg input:checked+span{background:var(--accent);color:var(--on-accent);font-weight:700}
+.seg input:focus-visible+span{outline:2px solid var(--focus);outline-offset:2px}
+.preview{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;min-width:0}
+.preview bdi{color:var(--smart-ink);font-weight:600}
+.set-switch{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 18px;align-items:center}
+.set-switch .set-h{margin:0}
+.set-switch .help{grid-column:1;margin:0;font-size:13px;color:var(--text-2);max-width:560px}
+.set-switch .sw{grid-row:1/3;grid-column:2}
+.sites li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 8px 7px 12px;margin-bottom:6px;background:var(--input-bg);border:1px solid var(--line);border-radius:var(--r)}
+.sites .domain{font-size:13px}
+.sites-empty{font-size:13px;color:var(--text-2)}
+.sync-box{display:flex;gap:10px;margin-top:2px;padding:12px 14px;border-radius:8px;background:var(--accent-soft);border:1px solid var(--accent-line);font-size:13.5px;line-height:1.5}
+.sync-box.warn{background:var(--smart-soft);border-color:var(--smart-line)}
+.about{margin-top:26px;padding:20px 22px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--sunken);display:grid;grid-template-columns:64px minmax(0,1fr);gap:4px 18px}
+.about img{width:64px;height:64px;grid-row:1/9}
+.about h2{font-size:16px;font-weight:800;margin-bottom:6px}
+.about p{font-size:13.5px;line-height:1.6;color:var(--text)}
+.about .about-link{margin-top:8px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.about .credit{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);color:var(--text-2);font-size:13px}
+.about .ver{font-family:var(--font-mono);font-size:12px;color:var(--text-3);margin-top:6px}
+
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);padding:22px;width:min(440px,calc(100vw - 32px));box-shadow:var(--shadow)}
+dialog::backdrop{background:var(--backdrop)}
+dialog[open]{animation:dlg-in .28s var(--ease-spring)}
+@keyframes dlg-in{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+.dlg-ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:12px;background:var(--hover);color:var(--text-2)}
+.dlg-ico.danger{color:var(--danger)}
+dialog h2{font-size:16px;font-weight:700;line-height:1.55}
+dialog p{color:var(--text-2);margin-top:4px}
+.dlg-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+
+.page-options .toast{position:fixed;inset-inline:auto;left:50%;bottom:26px;transform:translate(-50%,10px);max-width:calc(100vw - 32px)}
+.page-options .toast.on{transform:translate(-50%,0)}
+
+@media (max-width:1100px){
+  .panel-mine{grid-template-columns:minmax(0,1fr);background:none}
+  .editor{position:static;height:auto;background:var(--sunken);border-top:1px solid var(--line)}
+}
+@media (max-width:720px){
+  .opt{grid-template-columns:minmax(0,1fr);border:0;background:var(--panel)}
+  .side{position:static;height:auto;padding:14px 16px 10px;gap:8px;background:var(--sunken);border-bottom:1px solid var(--line)}
+  .brand{padding:0 0 4px}
+  .tabs{flex-direction:row;gap:4px}
+  .tab{flex:1;justify-content:center;gap:6px;padding:8px 4px;font-size:13.5px;white-space:nowrap}
+  .tab .count{display:none}
+  .tab[aria-selected="true"]{box-shadow:inset 0 -3px 0 var(--accent)}
+  .side-bottom{margin-top:2px;padding:0}
+  .side-bottom .sync{display:none}
+  .list-col{padding:14px 16px}
+  .tools .btn{padding:0 12px}
+  .tbl col.c-abbr{width:78px}
+  .tbl col.c-desc,.tbl col.c-gain,.tbl col.c-act,.tbl .c-desc,.tbl .c-gain,.tbl .c-act{display:none}
+  .tbl col.c-on{width:52px}
+  .editor{padding:16px}
+  .panel-wide{padding:18px 16px 32px}
+  .smart-item{grid-template-columns:auto minmax(0,1fr) auto}
+  .smart-item .coil-mini{display:none}
+  .about{grid-template-columns:minmax(0,1fr);padding:16px}
+  .about img{grid-row:auto;width:48px;height:48px}
+  .list-foot .push{margin-inline-start:0}
+}
+
+/* ---------- 6. דף פתיחה (welcome.html) ---------- */
+.page-welcome{min-height:100vh}
+.wl{max-width:1200px;margin:0 auto;min-height:100vh;padding:26px 40px 44px;display:flex;flex-direction:column}
+.wl-top{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800}
+.wl-top img{width:34px;height:34px;display:block}
+.wl-grid{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:60px;align-items:center;padding:36px 0 30px}
+.wl h1{font-size:clamp(34px,4.4vw,56px);font-weight:800;line-height:1.08;letter-spacing:-.5px}
+.wl h1 .hl{color:var(--accent-ink)}
+.wl h1 .nw{white-space:nowrap}
+.wl-lines{margin-top:30px;display:flex;flex-direction:column;gap:24px}
+.wl-lines li{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;font-size:17px;line-height:1.6}
+.wl-ico{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;background:var(--accent-soft);border:1px solid var(--accent-line);color:var(--accent-ink)}
+
+/* מקלדת: השורה העליונה, כמו שהיא באמת (משמאל לימין) */
+.kb{direction:ltr;display:flex;gap:6px;margin-top:14px;justify-content:flex-end}
+.key{position:relative;width:48px;height:48px;padding:5px 6px;border-radius:7px;background:var(--key-face);border:1px solid var(--line);box-shadow:0 3px 0 var(--key-edge);display:flex;flex-direction:column;justify-content:space-between;font-family:var(--font-sans);color:var(--text)}
+.key .en{font-size:10px;line-height:1;color:var(--text-3);text-transform:uppercase}
+.key .he{font-size:19px;line-height:1;font-weight:700;align-self:flex-end}
+.key.tab{width:76px}
+.key.tab .he{font-size:13px;font-weight:600;color:var(--text-2)}
+.key.fade{opacity:.55}
+.key.hot{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 3px 0 var(--accent-border);color:var(--accent-ink)}
+.key.hot .he{font-family:var(--font-mono);font-size:24px}
+.key.hot.press{animation:press .7s ease}
+@keyframes press{0%,100%{transform:translateY(0);box-shadow:0 3px 0 var(--accent-border)}25%{transform:translateY(3px);box-shadow:0 0 0 var(--accent-border)}50%{transform:translateY(-1px)}}
+
+.try{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 26px 22px;box-shadow:var(--shadow)}
+.try-label{display:block;font-size:15.5px;font-weight:700;margin-bottom:12px}
+.try-input{display:block;width:100%;font-size:30px;font-weight:700;padding:14px 16px;border-radius:10px;border:1.5px solid var(--line);background:var(--input-bg);color:var(--text);transform-origin:right center}
+.try-input::placeholder{font-family:var(--font-mono);font-weight:700}
+.try-input:focus-visible{outline:none;border-color:var(--focus);box-shadow:0 0 0 4px var(--accent-soft)}
+.try-input.pop{animation:spring-out .55s cubic-bezier(.3,.8,.4,1)}
+@keyframes spring-out{0%{transform:scaleX(.82)}45%{transform:scaleX(1.035)}70%{transform:scaleX(.992)}100%{transform:scaleX(1)}}
+.try-spring{display:flex;align-items:center;gap:10px;height:30px;margin:14px 0 6px}
+.try-spring .chip{transition:opacity .2s}
+.try-spring svg{flex:1;height:18px;color:var(--coil);transform-origin:right center;transform:scaleX(.26);transition:transform .7s var(--ease-spring)}
+.try.sprung .try-spring svg{transform:scaleX(1)}
+.try-gain{font-family:var(--font-mono);font-weight:700;font-size:16px;color:var(--accent-ink);direction:ltr;opacity:0;transform:scale(.5);transition:opacity .2s .25s,transform .45s .25s var(--ease-spring)}
+.try.sprung .try-gain{opacity:1;transform:none}
+.try-msg{min-height:26px;font-size:16px;font-weight:700;color:var(--accent-ink)}
+.try-hint{font-size:14px;color:var(--smart-ink);font-weight:600}
+.try-more{margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:14px;line-height:2.1;color:var(--text-2)}
+.try-more .chip{margin:0 2px}
+.wl-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .wl{padding:18px 16px 32px}
+  .wl-grid{grid-template-columns:minmax(0,1fr);gap:28px;padding:24px 0}
+  .wl-lines li{font-size:15.5px}
+  .kb{justify-content:flex-start;gap:5px}
+  .key{width:42px;height:42px}
+  .key.tab{width:60px}
+  .try{padding:18px 16px}
+  .try-input{font-size:24px}
+}
+
+/* ---------- 7. לוח מסכים (index.html) — רק לעיצוב, לא נכנס לתוסף ---------- */
+.ix{max-width:1620px;margin:0 auto;padding:30px 32px 60px}
+.ix-head{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.ix-head img{width:52px;height:52px}
+.ix-head h1{font-size:26px;font-weight:800}
+.ix-head p{color:var(--text-2);font-size:14px}
+.ix-head .theme-row{width:auto;margin-inline-start:auto}
+.ix h2{font-size:17px;font-weight:700;margin:30px 0 12px}
+.ix-pops{display:flex;flex-wrap:wrap;gap:22px}
+.ix-pops figure{display:flex;flex-direction:column;gap:8px}
+.ix-pops iframe{width:360px;height:500px;border:1px solid var(--line);border-radius:var(--r-lg);background:var(--panel);box-shadow:var(--shadow-sm);display:block}
+.ix-pops figcaption{font-size:13px;color:var(--text-2)}
+.ix-links{display:flex;flex-wrap:wrap;gap:8px}
+.ix-icons{display:flex;flex-wrap:wrap;gap:16px}
+.ix-icons .bgk{display:flex;align-items:flex-end;gap:18px;padding:18px 22px;border-radius:var(--r-lg);border:1px solid var(--line)}
+.ix-icons .bgk.l{background:#FFFFFF}.ix-icons .bgk.l2{background:#F1F3F4}.ix-icons .bgk.d{background:#202124}.ix-icons .bgk.d2{background:#35363A}
+@media (max-width:600px){.ix{padding:20px 16px 40px}.ix-pops iframe{width:100%;max-width:360px}.ix-pops figure{width:100%}}
+
+/* ---------- תנועה מופחתת ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* ---------- 8. תוספות של המפתח (2026-11-11) ----------
+   רק מה שנדרש לרכיבים שנוספו בבנייה, באותם משתנים ובאותו סגנון:
+   שורות חדשות באודות (כולל "בדיקת עדכון"), הודעת קריאה בלבד, קיצורים פגומים, ורשימת הרשומות שנדחו בייבוא. */
+@media (min-width:721px){
+  .about img{grid-row:1/14}
+}
+.about .about-update .ver{margin-top:0}
+.about .update-status{font-size:13px;color:var(--text-2)}
+.about .update-help{font-size:12.5px;color:var(--text-3)}
+.notice{margin:16px 24px 0}
+.notice-acts{margin-top:10px}
+.rejected-list{list-style:none;margin:12px 0 0;padding:10px 12px;max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--sunken);font-size:13px;line-height:1.6;color:var(--text-2)}
+.rejected-list li + li{margin-top:4px}
+/* קיצור ארוך: נחתך עם שלוש נקודות במקום לעלות על העמודה שלידו. הקיצור המלא מופיע בריחוף. */
+.tbl td.c-abbr{overflow:hidden}
+.tbl td.c-abbr .chip,dialog h2 .chip{max-width:100%;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+.row .chip,.spring .chip{flex:0 1 auto;min-width:0;max-width:46%;overflow:hidden;text-overflow:ellipsis}
+#dSumSettings{margin-top:10px}
+.chip[dir="ltr"]{direction:ltr}
+/* 1101 עד 1290 פיקסלים: העורך תופס 360 פיקסלים לצד הטבלה, והעמודות הקבועות לא משאירות מקום לעמודת "טקסט".
+   בטווח הזה מוסתרות "תיאור" ו"חיסכון", כמו בחלון צר. */
+@media (min-width:1101px) and (max-width:1290px){
+  .tbl col.c-desc,.tbl col.c-gain,.tbl .c-desc,.tbl .c-gain{display:none}
+}

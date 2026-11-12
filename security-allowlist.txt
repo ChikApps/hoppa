@@ -1,0 +1,21 @@
+# Addresses that may appear as text inside the built package (dist/).
+# None of them is ever requested: the extension makes no network requests.
+# The security check fails on any address that is not listed here.
+
+# XML namespace of SVG. An identifier, not a request.
+http://www.w3.org/2000/svg
+
+# Fixed links in "About" (src/pages/links.js). Shown to the user, never requested.
+https://github.com/ChikApps/hoppa
+https://chikapps.github.io/hoppa/privacy.html
+
+# License notices of the bundled libraries (hebcal), kept as they are.
+https://www.gnu.org/licenses/gpl-2.0.txt
+http://www.gnu.org/licenses/
+https://www.gnu.org/licenses/
+https://github.com/hebcal/hebcal-es6
+https://sindresorhus.com
+https://github.com/hebcal/hdate-js
+
+# A reference link inside a documentation comment of the hebcal source. It is a comment, not code.
+https://en.wikipedia.org/wiki/Rata_Die

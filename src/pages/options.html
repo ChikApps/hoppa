@@ -1,0 +1,233 @@
+<!doctype html>
+<!-- Copyright (C) 2026 ChikApps. SPDX-License-Identifier: GPL-2.0-or-later -->
+<html lang="he" dir="rtl" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoppa · ניהול קיצורים</title>
+<link rel="stylesheet" href="css/hoppa.css">
+<script src="js/theme.js"></script>
+</head>
+<body class="page-options">
+<div class="opt">
+
+  <aside class="side">
+    <div class="brand">
+      <img src="icons/hoppa.svg" alt="" width="36" height="36">
+      <h1>Hoppa<span class="sep" aria-hidden="true"> · </span><span class="brand-sub">ניהול קיצורים</span></h1>
+    </div>
+    <div class="tabs" role="tablist" aria-orientation="vertical" aria-label="Hoppa">
+      <button type="button" class="tab" role="tab" id="tab-mine" data-tab="mine" aria-controls="panel-mine" aria-selected="true">הקיצורים שלי <span class="count" id="countMine"></span></button>
+      <button type="button" class="tab" role="tab" id="tab-smart" data-tab="smart" aria-controls="panel-smart" aria-selected="false" tabindex="-1">חכמים <span class="count" id="countSmart"></span></button>
+      <button type="button" class="tab" role="tab" id="tab-settings" data-tab="settings" aria-controls="panel-settings" aria-selected="false" tabindex="-1">הגדרות</button>
+    </div>
+    <div class="side-bottom">
+      <p class="sync" id="syncSide"><i class="dot" aria-hidden="true"></i><span></span></p>
+      <button type="button" class="theme-row" data-theme-toggle aria-pressed="false">
+        <svg class="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle class="core" cx="12" cy="12" r="4.2"/><g class="rays"><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/></g></svg>
+        <span>מצב יום</span><span class="mini-sw" aria-hidden="true"></span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <p class="sync-box warn notice" id="readOnlyBox" role="alert" hidden><i class="dot" aria-hidden="true"></i><span></span></p>
+
+    <!-- ========== הקיצורים שלי ========== -->
+    <section class="panel-mine" id="panel-mine" role="tabpanel" aria-labelledby="tab-mine">
+      <div class="list-col">
+        <div class="tools">
+          <div class="search-field">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+            <input type="search" id="q" placeholder="חיפוש קיצור או טקסט…" aria-label="חיפוש קיצור או טקסט…" autocomplete="off" spellcheck="false">
+          </div>
+          <button type="button" class="btn primary" id="btnNew">+ קיצור חדש</button>
+        </div>
+
+        <div class="table-wrap" id="tableWrap">
+          <table class="tbl">
+            <colgroup><col class="c-abbr"><col><col class="c-desc"><col class="c-gain"><col class="c-on"><col class="c-act"></colgroup>
+            <thead><tr>
+              <th scope="col">קיצור</th><th scope="col">טקסט</th><th scope="col" class="c-desc">תיאור</th>
+              <th scope="col" class="c-gain" title="כמה תווים הקיצור חוסך בהקלדה">חוסך</th><th scope="col" class="c-on">פעיל</th>
+              <th scope="col" class="c-act"><span class="sr-only">עריכה · מחיקה</span></th>
+            </tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <p class="empty-search" id="noResults" hidden>לא נמצא קיצור כזה</p>
+
+        <div class="empty" id="emptyState" hidden>
+          <svg width="120" height="40" viewBox="0 0 120 40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M112 20c-2-13-4-13-6 0s-4 13-6 0-4-13-6 0-4 13-6 0-4-13-6 0-4 13-6 0-4-13-6 0-4 13-6 0-4-13-6 0-4 13-6 0"/><path d="M8 20h18" opacity=".4"/></svg>
+          <p>עוד אין כאן קיצורים. אפשר להוסיף קיצור חדש, או לשחזר את החבילה המוכנה.</p>
+          <div class="acts"><button type="button" class="btn primary" data-act="new">+ קיצור חדש</button><button type="button" class="btn" data-act="restore">שחזור החבילה המוכנה</button></div>
+        </div>
+
+        <div class="list-foot">
+          <button type="button" class="btn" id="btnImport">ייבוא</button>
+          <div class="menu-wrap">
+            <button type="button" class="btn" id="btnExport" aria-haspopup="menu" aria-expanded="false" aria-controls="exportMenu">ייצוא</button>
+            <div class="menu" id="exportMenu" role="menu" hidden>
+              <button type="button" role="menuitem" data-fmt="json">קובץ גיבוי של התוסף (JSON)</button>
+              <button type="button" role="menuitem" data-fmt="csv">קובץ אקסל (CSV)</button>
+            </div>
+          </div>
+          <button type="button" class="btn push" id="btnRestore">שחזור החבילה המוכנה</button>
+          <input type="file" id="file" accept=".json,.csv,application/json,text/csv" hidden>
+        </div>
+      </div>
+
+      <aside class="editor" aria-labelledby="edTitle">
+        <h2 class="ed-h" id="edTitle">עריכה</h2>
+        <form id="edForm" novalidate>
+          <div class="f" id="fAbbrWrap">
+            <label for="fAbbr">קיצור</label>
+            <input id="fAbbr" class="abbr-input" dir="auto" autocomplete="off" spellcheck="false" aria-describedby="hAbbr eAbbr">
+            <p class="help" id="hAbbr">מתחיל ב-{{T}} (המקש שמימין ל-Tab)</p>
+            <p class="err" id="eAbbr" hidden></p>
+          </div>
+          <div class="f" id="fTextWrap">
+            <label for="fText">טקסט</label>
+            <textarea id="fText" rows="4" aria-describedby="eText"></textarea>
+            <p class="err" id="eText" hidden></p>
+          </div>
+          <div class="f" id="fDescWrap">
+            <label for="fDesc">תיאור</label>
+            <input id="fDesc" placeholder="לא חובה. למשל: חתימה לעבודה" autocomplete="off" aria-describedby="eDesc">
+            <p class="err" id="eDesc" hidden></p>
+          </div>
+
+          <div class="spring" aria-hidden="true">
+            <span class="chip" id="spChip"></span>
+            <svg class="coil" id="spCoil" width="40" height="16" viewBox="0 0 40 16"><path id="spPath" d="" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <div class="spring-out" id="spOut"></div>
+            <span class="spring-gain" id="spGain"></span>
+          </div>
+
+          <label class="f-inline"><input type="checkbox" class="sw" role="switch" id="fOn" checked> פעיל</label>
+          <div class="acts-row">
+            <button type="submit" class="btn primary">שמירה</button>
+            <button type="button" class="btn" id="btnCancel">ביטול</button>
+            <button type="button" class="btn-text danger push" id="btnDel">מחיקה</button>
+          </div>
+        </form>
+      </aside>
+    </section>
+
+    <!-- ========== חכמים ========== -->
+    <section class="panel-wide" id="panel-smart" role="tabpanel" aria-labelledby="tab-smart" hidden>
+      <p class="lead">הקיצורים האלה מתעדכנים לבד. אפשר לכבות כל אחד מהם.</p>
+      <ul class="smart-list" id="smartList"></ul>
+    </section>
+
+    <!-- ========== הגדרות ========== -->
+    <section class="panel-wide" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+
+      <div class="set" id="corruptBox" hidden>
+        <p class="sync-box warn" role="status"><i class="dot" aria-hidden="true"></i><span id="corruptText"></span></p>
+        <p class="notice-acts"><button type="button" class="btn" id="btnCorrupt">מחיקת הפגומים</button></p>
+      </div>
+
+      <fieldset class="set">
+        <legend class="set-h">לוח פרשת השבוע</legend>
+        <div class="set-row">
+          <div class="seg">
+            <label><input type="radio" name="calendar" value="il"><span>ארץ ישראל</span></label>
+            <label><input type="radio" name="calendar" value="diaspora"><span>חו"ל</span></label>
+          </div>
+          <span class="preview" aria-hidden="true"><span class="chip smart" id="pvParashaAbbr"></span><svg class="coil-mini" viewBox="0 0 16 8" aria-hidden="true" focusable="false"><path d="M15.5 4C14 .6 13 .6 12 4S10 7.4 9 4 7 .6 6 4 4 7.4 3 4L.5 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><bdi id="pvParasha"></bdi></span>
+        </div>
+      </fieldset>
+
+      <fieldset class="set">
+        <legend class="set-h">אחרי סכום במילים</legend>
+        <div class="set-row">
+          <div class="seg">
+            <label><input type="radio" name="suffix" value="shekel"><span>שקלים חדשים</span></label>
+            <label><input type="radio" name="suffix" value="shah"><span>ש"ח</span></label>
+            <label><input type="radio" name="suffix" value="none"><span>בלי</span></label>
+          </div>
+          <span class="preview" aria-hidden="true"><span class="chip smart" id="pvNumberAbbr"></span><svg class="coil-mini" viewBox="0 0 16 8" aria-hidden="true" focusable="false"><path d="M15.5 4C14 .6 13 .6 12 4S10 7.4 9 4 7 .6 6 4 4 7.4 3 4L.5 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg><bdi id="pvNumber"></bdi></span>
+        </div>
+      </fieldset>
+
+      <div class="set set-switch">
+        <label class="set-h" for="docsSw">החלפה בגוגל דוקס</label>
+        <p class="help" id="docsHelp">אם משהו בדוקס לא עובד כמו שצריך, אפשר לכבות כאן עד שיוצא עדכון. בשאר האתרים ההחלפה ממשיכה כרגיל.</p>
+        <input type="checkbox" class="sw" role="switch" id="docsSw" aria-describedby="docsHelp">
+      </div>
+
+      <section class="set" aria-labelledby="sitesH">
+        <h2 class="set-h" id="sitesH">אתרים שבהם התוסף כבוי</h2>
+        <ul class="sites" id="sites"></ul>
+        <p class="sites-empty" id="sitesEmpty" hidden>אין כרגע. אפשר לכבות אתר מהחלון של התוסף.</p>
+      </section>
+
+      <div class="set last">
+        <p class="sync-box" id="syncBox"><i class="dot" aria-hidden="true"></i><span></span></p>
+      </div>
+
+      <section class="about" aria-labelledby="aboutH">
+        <img src="icons/hoppa.svg" alt="" width="64" height="64">
+        <h2 id="aboutH">אודות Hoppa</h2>
+        <p>Hoppa (הופה) מחליף קיצורים בטקסט המלא, בכל אתר. נבנה בעברית, לתועלת הציבור.</p>
+        <p>חינם לגמרי, בלי פרסומות ובלי הרשמה. אנחנו לא אוספים שום מידע, ואין לנו שרת.</p>
+        <p>הקיצורים נשמרים בכרום שלכם. אם הסנכרון של כרום פועל אצלכם, הם נשמרים גם בחשבון הגוגל שלכם ומסתנכרנים דרכו.</p>
+        <p>הקוד פתוח לכולם, וכל אחד יכול לבדוק בעצמו שהתוסף לא אוסף מידע.</p>
+        <p class="about-link"><a class="link" href="#" id="codeLink" rel="noopener noreferrer" target="_blank">לקוד של התוסף בגיטהאב ←</a></p>
+        <p class="credit">התאריך העברי ופרשת השבוע מחושבים בעזרת hebcal, ספרייה חינמית בקוד פתוח (hebcal.com). תודה!</p>
+        <p>Hoppa ניתן בחינם, כמו שהוא, ובלי אחריות. השימוש בו באחריותכם. הרישיון המלא נמצא יחד עם הקוד.</p>
+        <p class="about-link"><a class="link" href="#" id="privacyLink" rel="noopener noreferrer" target="_blank">למדיניות הפרטיות ←</a></p>
+        <p>מצאתם בעיה או פרצת אבטחה? כתבו לנו: <bdi id="contact"></bdi></p>
+        <p>מאת <bdi id="publisher"></bdi></p>
+        <p class="about-link about-update"><span class="ver" id="ver"></span><button type="button" class="btn" id="btnUpdate">בדיקת עדכון</button><span class="update-status" id="updateStatus" role="status" aria-live="polite"></span></p>
+        <p class="update-help">Hoppa מתעדכן לבד דרך החנות של כרום. הכפתור רק מזרז את זה.</p>
+      </section>
+    </section>
+  </main>
+</div>
+
+<dialog id="dlgDel" aria-labelledby="dDelT" aria-describedby="dDelD">
+  <form method="dialog">
+    <div class="dlg-ico danger" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></div>
+    <h2 id="dDelT">למחוק את הקיצור <bdi class="chip" id="dDelAbbr"></bdi>?</h2>
+    <p id="dDelD">אי אפשר לבטל את זה.</p>
+    <div class="dlg-acts">
+      <button type="submit" value="yes" class="btn danger">כן, למחוק</button>
+      <button type="submit" value="no" class="btn" autofocus>לא, להשאיר</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgImp" aria-labelledby="dImpT">
+  <form method="dialog">
+    <div class="dlg-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div>
+    <h2 id="dImpT">הקיצור <bdi class="chip" id="dImpAbbr"></bdi> כבר קיים. מה לעשות?</h2>
+    <div class="dlg-acts">
+      <button type="submit" value="skip" class="btn" autofocus>דילוג</button>
+      <button type="submit" value="replace" class="btn">החלפה</button>
+      <button type="submit" value="both" class="btn">לשמור את שניהם</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgSum" aria-labelledby="dSumT">
+  <form method="dialog">
+    <div class="dlg-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div>
+    <h2 id="dSumT"></h2>
+    <p id="dSumRejected" hidden><span id="dSumRejectedText"></span> <button type="button" class="btn-text" id="dSumWhy" aria-expanded="false" aria-controls="dSumList">אילו נדחו ולמה?</button></p>
+    <ul class="rejected-list" id="dSumList" hidden></ul>
+    <p id="dSumSettings" hidden></p>
+    <div class="dlg-acts">
+      <button type="submit" value="yes" class="btn primary" id="dSumOk">ייבוא</button>
+      <button type="submit" value="no" class="btn" autofocus>ביטול</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="toast err" id="toastErr" role="alert"></div>
+
+<script src="js/options.js"></script>
+</body>
+</html>
